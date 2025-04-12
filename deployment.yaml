@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: redis-deployment
   namespace: tenant-b
+  labels:
+    app: redis
 spec:
   replicas: 1
   selector:
@@ -14,7 +16,14 @@ spec:
         app: redis
     spec:
       containers:
-      - name: redis
-        image: redis:latest
-        ports:
-        - containerPort: 6379
+        - name: redis
+          image: redis:latest
+          ports:
+            - containerPort: 6379
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
